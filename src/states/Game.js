@@ -6,9 +6,6 @@ export default class extends Phaser.State {
   init () {}
 
   preload () {
-    this.load.tilemap('tilemap', 'assets/tiled_map1.json', null, Phaser.Tilemap.TILED_JSON)
-    this.load.image('tiles', 'assets/P6yozhP.png')
-    this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48)
 
   }
 
