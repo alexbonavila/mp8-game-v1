@@ -10,6 +10,31 @@ export default class extends Phaser.State {
   }
 
   create () {
+    this.firstBuildGame1()
+
+    //Added physics
+    this.game.physics.startSystem(Phaser.Physics.ARCADE)
+    //Creating and capturing cursors
+    this.cursor = this.input.keyboard.createCursorKeys()
+    this.input.keyboard.addKeyCapture([Phaser.Keyboard.UP, Phaser.Keyboard.DOWN, Phaser.Keyboard.RIGHT, Phaser.Keyboard.LEFT])
+
+
+    this.createPlayer()
+  }
+
+  update () {
+    this.game.physics.arcade.collide(this.player, this.groundLayer)
+
+    this.inputs()
+  }
+
+  render () {
+    // if (__DEV__) {
+    //   this.game.debug.spriteInfo(this.mushroom, 32, 32)
+    // }
+  }
+
+  firstBuildGame1(){
     this.map = this.game.add.tilemap('tilemap')
     this.map.addTilesetImage('P6yozhP', 'tiles')
 
@@ -26,36 +51,6 @@ export default class extends Phaser.State {
     //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.scale.pageAlignHorizontally = true
     this.scale.updateLayout()
-
-    //Added physics
-    this.game.physics.startSystem(Phaser.Physics.ARCADE)
-    this.cursor = this.input.keyboard.createCursorKeys()
-    this.input.keyboard.addKeyCapture([Phaser.Keyboard.UP, Phaser.Keyboard.DOWN, Phaser.Keyboard.RIGHT, Phaser.Keyboard.LEFT])
-
-    this.player = this.game.add.sprite(1, 1, 'dude')
-    this.game.physics.arcade.enable(this.player)
-
-    this.game.camera.follow(this.player)
-
-    this.player.body.bounce.y = 0.2
-    this.player.body.gravity.y = 420
-    this.player.body.collideWorldBounds = true
-
-    this.player.animations.add('left', [0, 1, 2, 3], 10, true)
-    this.player.animations.add('right', [5, 6, 7, 8], 10, true)
-
-  }
-
-  update () {
-    this.game.physics.arcade.collide(this.player, this.groundLayer)
-
-    this.inputs()
-  }
-
-  render () {
-    // if (__DEV__) {
-    //   this.game.debug.spriteInfo(this.mushroom, 32, 32)
-    // }
   }
 
   inputs () {
@@ -78,6 +73,24 @@ export default class extends Phaser.State {
     {
       this.jumpPlayer();
     }
+  }
+
+  createPlayer() {
+    //Create player
+    this.player = this.game.add.sprite(1, 1, 'dude')
+    this.game.physics.arcade.enable(this.player)
+
+    //The camera follows the player
+    this.game.camera.follow(this.player)
+
+    //Ativating collides grevity
+    this.player.body.bounce.y = 0.2
+    this.player.body.gravity.y = 420
+    this.player.body.collideWorldBounds = true
+
+    //adding anifations to walk left and right
+    this.player.animations.add('left', [0, 1, 2, 3], 10, true)
+    this.player.animations.add('right', [5, 6, 7, 8], 10, true)
   }
 
   jumpPlayer () {
