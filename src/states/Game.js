@@ -63,31 +63,17 @@ export default class extends Phaser.State {
 
   inputs () {
     if (this.cursor.left.isDown || this.moveLeft) {
-
       this.player.body.velocity.x = -200
-
-      //this.player.frame = 2
-
       this.player.animations.play('left');
 
-
     } else if (this.cursor.right.isDown || this.moveRight) {
-
       this.player.body.velocity.x = 200
-
-      //this.player.frame = 1
-
       this.player.animations.play('right');
 
-
     } else {
-
       this.player.animations.stop();
-
       this.player.frame = 4;
-
       this.player.body.velocity.x = 0
-
     }
 
     //  Allow the player to jump if they are touching the ground.
