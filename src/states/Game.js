@@ -66,7 +66,7 @@ export default class extends Phaser.State {
 
       this.player.body.velocity.x = -200
 
-      this.player.frame = 2
+      //this.player.frame = 2
 
       this.player.animations.play('left');
 
@@ -75,7 +75,7 @@ export default class extends Phaser.State {
 
       this.player.body.velocity.x = 200
 
-      this.player.frame = 1
+      //this.player.frame = 1
 
       this.player.animations.play('right');
 
