@@ -98,11 +98,9 @@ export default class extends Phaser.State {
   }
 
   jumpPlayer () {
-    if (this.player.body.touching.down && this.player.y > 100) {
-      this.sound.mute = false
-      this.hasJumped = true
-      //this.jumpSound.play()
-      this.player.body.velocity.y = -220
+    if (this.player.body.onFloor())
+    {
+      this.player.body.velocity.y = -350;
     }
   }
 
