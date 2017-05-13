@@ -18,6 +18,11 @@ export default class extends Phaser.State {
 
 
     this.createPlayer()
+
+
+    if (!this.game.device.desktop) {
+      this.addMobileInputs()
+    }
   }
 
   update () {
@@ -100,5 +105,46 @@ export default class extends Phaser.State {
     }
   }
 
+  addMobileInputs () {
+    this.jumpButton = this.add.sprite(430, 130, 'jump')
+    this.jumpButton.inputEnabled = true
+    this.jumpButton.events.onInputDown.add(this.jumpPlayer, this)
+    this.jumpButton.alpha = 0.5
+
+    this.moveLeft = false
+    this.moveRight = false
+
+    this.leftButton = this.add.sprite(10, 130, 'left')
+    this.leftButton.inputEnabled = true
+    this.leftButton.events.onInputOver.add(function () {
+      this.moveLeft = true
+    }, this)
+    this.leftButton.events.onInputOut.add(function () {
+      this.moveLeft = false
+    }, this)
+    this.leftButton.events.onInputDown.add(function () {
+      this.moveLeft = true
+    }, this)
+    this.leftButton.events.onInputUp.add(function () {
+      this.moveLeft = false
+    }, this)
+    this.leftButton.alpha = 0.5
+
+    this.rightButton = this.add.sprite(110, 130, 'right')
+    this.rightButton.inputEnabled = true
+    this.rightButton.events.onInputOver.add(function () {
+      this.moveRight = true
+    }, this)
+    this.rightButton.events.onInputOut.add(function () {
+      this.moveRight = false
+    }, this)
+    this.rightButton.events.onInputDown.add(function () {
+      this.moveRight = true
+    }, this)
+    this.rightButton.events.onInputUp.add(function () {
+      this.moveRight = false
+    }, this)
+    this.rightButton.alpha = 0.5
+  }
 
 }

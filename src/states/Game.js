@@ -20,6 +20,11 @@ export default class extends Phaser.State {
 
 
     this.createPlayer()
+
+
+    if (!this.game.device.desktop) {
+      this.addMobileInputs()
+    }
   }
 
   update () {
