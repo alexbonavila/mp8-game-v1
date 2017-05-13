@@ -15,12 +15,13 @@ export default class extends Phaser.State {
     //
     //this.load.image('mushroom', 'assets/images/mushroom2.png')
     this.load.tilemap('tilemap', 'assets/tiled_map1.json', null, Phaser.Tilemap.TILED_JSON)
+    this.load.tilemap('tilemap2', 'assets/tiled_map2.json', null, Phaser.Tilemap.TILED_JSON)
     this.load.image('tiles', 'assets/P6yozhP.png')
     this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48)
 
   }
 
   create () {
-    this.state.start('Game')
+    this.state.start('Game2')
   }
 }
