@@ -43,6 +43,7 @@ export default class extends Phaser.State {
     this.game.physics.arcade.overlap(this.player, this.blue_star, this.nextLevel, null, this)
 
     this.inputs()
+    this.enemyMovement()
   }
 
   render () {
@@ -114,13 +115,13 @@ export default class extends Phaser.State {
     this.enemy = this.game.add.group()
     this.enemy.enableBody = true
 
-    this.enemy1 = this.enemy.create(180, 575, 'enemy')
-    this.enemy2 = this.enemy.create(1530, 1, 'enemy')
+    this.enemy1 = this.enemy.create(180, 750, 'enemy')
+    this.enemy2 = this.enemy.create(1530, 400, 'enemy')
 
     this.enemy1.body.gravity.y = 300
-    this.enemy1.body.velocity.x = 0
+    this.enemy1.body.velocity.x = 40
     this.enemy2.body.gravity.y = 300
-    this.enemy2.body.velocity.x = 0
+    this.enemy2.body.velocity.x = 80
 
   }
 
@@ -145,6 +146,21 @@ export default class extends Phaser.State {
 
   nextLevel () {
     this.level = true
+  }
+
+
+  enemyMovement () {
+    if (parseInt(this.enemy1.body.x) > 280) {
+      this.enemy1.body.velocity.x = -40
+    } else if (parseInt(this.enemy1.body.x) < 180) {
+      this.enemy1.body.velocity.x = 40
+    }
+
+    if (parseInt(this.enemy2.body.x) > 1530) {
+      this.enemy2.body.velocity.x = -80
+    } else if (parseInt(this.enemy2.body.x) < 1290) {
+      this.enemy2.body.velocity.x = 80
+    }
   }
 
   inputs () {
