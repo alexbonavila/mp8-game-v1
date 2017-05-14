@@ -1,5 +1,6 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
+import globals from '../globals'
 import Mushroom from '../sprites/Mushroom'
 
 export default class extends Phaser.State {
@@ -10,7 +11,7 @@ export default class extends Phaser.State {
   }
 
   create () {
-    this.level = false
+    globals.level=1;
 
     this.firstBuildGame1()
 
@@ -28,7 +29,7 @@ export default class extends Phaser.State {
 
     this.addBlueStar()
 
-    this.levelText = this.game.add.text(15, 5, 'Level 1', {fontSize: '16px', fill: '#ffff'})
+    this.levelText = this.game.add.text(15, 5, 'Level '+globals.level, {fontSize: '16px', fill: '#ffff'})
     this.levelText.fixedToCamera = true
 
     if (!this.game.device.desktop) {
@@ -50,7 +51,7 @@ export default class extends Phaser.State {
   }
 
   render () {
-    if (this.level === true) {
+    if (globals.level === 2) {
       this.state.start('Game2')
     }
   }
@@ -148,7 +149,7 @@ export default class extends Phaser.State {
   }
 
   nextLevel () {
-    this.level = true
+    globals.level=2;
   }
 
   enemyMovement () {

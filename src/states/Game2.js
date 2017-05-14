@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import globals from '../globals'
 
 export default class extends Phaser.State {
   init () {}
@@ -8,6 +9,9 @@ export default class extends Phaser.State {
   }
 
   create () {
+    globals.level=2;
+
+
     this.firstBuildGame2()
 
     //Added physics
@@ -21,7 +25,7 @@ export default class extends Phaser.State {
 
 
 
-    this.levelText = this.game.add.text(15, 5, 'Level 2', {fontSize: '16px', fill: '#ffff'})
+    this.levelText = this.game.add.text(15, 5, 'Level '+ globals.level, {fontSize: '16px', fill: '#ffff'})
     this.levelText.fixedToCamera = true
 
     if (!this.game.device.desktop) {
