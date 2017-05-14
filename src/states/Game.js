@@ -10,7 +10,7 @@ export default class extends Phaser.State {
   }
 
   create () {
-    this.level=false;
+    this.level = false
 
     this.firstBuildGame1()
 
@@ -24,6 +24,8 @@ export default class extends Phaser.State {
 
     this.addStars()
 
+    this.addEnemy()
+
     this.addBlueStar()
 
     if (!this.game.device.desktop) {
@@ -33,18 +35,18 @@ export default class extends Phaser.State {
 
   update () {
     this.game.physics.arcade.collide(this.player, this.groundLayer)
-    this.game.physics.arcade.collide(this.stars, this.groundLayer);
-    this.game.physics.arcade.collide(this.blue_star, this.groundLayer);
+    this.game.physics.arcade.collide(this.stars, this.groundLayer)
+    this.game.physics.arcade.collide(this.blue_star, this.groundLayer)
+    this.game.physics.arcade.collide(this.enemy, this.groundLayer)
 
-
-    this.game.physics.arcade.overlap(this.player, this.stars, this.takeStar, null, this);
-    this.game.physics.arcade.overlap(this.player, this.blue_star, this.nextLevel, null, this);
+    this.game.physics.arcade.overlap(this.player, this.stars, this.takeStar, null, this)
+    this.game.physics.arcade.overlap(this.player, this.blue_star, this.nextLevel, null, this)
 
     this.inputs()
   }
 
   render () {
-    if(this.level===true){
+    if (this.level === true) {
       this.state.start('Game2')
     }
   }
@@ -66,27 +68,6 @@ export default class extends Phaser.State {
     //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.scale.pageAlignHorizontally = true
     this.scale.updateLayout()
-  }
-
-  inputs () {
-    if (this.cursor.left.isDown || this.moveLeft) {
-      this.player.body.velocity.x = -200
-      this.player.animations.play('left')
-
-    } else if (this.cursor.right.isDown || this.moveRight) {
-      this.player.body.velocity.x = 200
-      this.player.animations.play('right')
-
-    } else {
-      this.player.animations.stop()
-      this.player.frame = 4
-      this.player.body.velocity.x = 0
-    }
-
-    //  Allow the player to jump if they are touching the ground.
-    if (this.cursor.up.isDown) {
-      this.jumpPlayer()
-    }
   }
 
   createPlayer () {
@@ -113,23 +94,37 @@ export default class extends Phaser.State {
     //  We will enable physics for any star that is created in this group
     this.stars.enableBody = true
 
-    var x_axis_star=50
+    var x_axis_star = 50
 
-    for (var i=0;i<8;i++){
+    for (var i = 0; i < 8; i++) {
       this.star = this.stars.create(x_axis_star, 250, 'star')
       this.star.body.gravity.y = 700
       this.star.body.bounce.y = 0.7 + Math.random() * 0.2
 
-      if(i===4){
-        x_axis_star=x_axis_star+250;
-      }else{
-        x_axis_star=x_axis_star+200;
+      if (i === 4) {
+        x_axis_star = x_axis_star + 250
+      } else {
+        x_axis_star = x_axis_star + 200
       }
 
     }
   }
 
-  addBlueStar(){
+  addEnemy () {
+    this.enemy = this.game.add.group()
+    this.enemy.enableBody = true
+
+    this.enemy1 = this.enemy.create(180, 575, 'enemy')
+    this.enemy2 = this.enemy.create(1530, 1, 'enemy')
+
+    this.enemy1.body.gravity.y = 300
+    this.enemy1.body.velocity.x = 0
+    this.enemy2.body.gravity.y = 300
+    this.enemy2.body.velocity.x = 0
+
+  }
+
+  addBlueStar () {
     this.blue_star = this.game.add.sprite(1975, 250, 'blue_star')
     this.game.physics.arcade.enable(this.blue_star)
 
@@ -137,9 +132,9 @@ export default class extends Phaser.State {
   }
 
   takeStar (player, star) {
-    star.body.enable = false;
-    game.add.tween(star.scale).to({x:0}, 150).start();
-    game.add.tween(star).to({y:50}, 150).start();
+    star.body.enable = false
+    game.add.tween(star.scale).to({x: 0}, 150).start()
+    game.add.tween(star).to({y: 50}, 150).start()
   }
 
   jumpPlayer () {
@@ -149,7 +144,28 @@ export default class extends Phaser.State {
   }
 
   nextLevel () {
-    this.level=true;
+    this.level = true
+  }
+
+  inputs () {
+    if (this.cursor.left.isDown || this.moveLeft) {
+      this.player.body.velocity.x = -200
+      this.player.animations.play('left')
+
+    } else if (this.cursor.right.isDown || this.moveRight) {
+      this.player.body.velocity.x = 200
+      this.player.animations.play('right')
+
+    } else {
+      this.player.animations.stop()
+      this.player.frame = 4
+      this.player.body.velocity.x = 0
+    }
+
+    //  Allow the player to jump if they are touching the ground.
+    if (this.cursor.up.isDown) {
+      this.jumpPlayer()
+    }
   }
 
   addMobileInputs () {
