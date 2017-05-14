@@ -18,9 +18,9 @@ export default class extends Phaser.State {
     this.cursor = this.input.keyboard.createCursorKeys()
     this.input.keyboard.addKeyCapture([Phaser.Keyboard.UP, Phaser.Keyboard.DOWN, Phaser.Keyboard.RIGHT, Phaser.Keyboard.LEFT])
 
-
     this.createPlayer()
 
+    this.addStars()
 
     if (!this.game.device.desktop) {
       this.addMobileInputs()
@@ -29,6 +29,10 @@ export default class extends Phaser.State {
 
   update () {
     this.game.physics.arcade.collide(this.player, this.groundLayer)
+    this.game.physics.arcade.collide(this.stars, this.groundLayer);
+
+
+
 
     this.inputs()
   }
@@ -39,11 +43,11 @@ export default class extends Phaser.State {
     // }
   }
 
-  nextLevel(){
-    console.log("next level");
+  nextLevel () {
+    console.log('next level')
   }
 
-  firstBuildGame1(){
+  firstBuildGame1 () {
     this.map = this.game.add.tilemap('tilemap')
     this.map.addTilesetImage('P6yozhP', 'tiles')
 
@@ -65,26 +69,25 @@ export default class extends Phaser.State {
   inputs () {
     if (this.cursor.left.isDown || this.moveLeft) {
       this.player.body.velocity.x = -200
-      this.player.animations.play('left');
+      this.player.animations.play('left')
 
     } else if (this.cursor.right.isDown || this.moveRight) {
       this.player.body.velocity.x = 200
-      this.player.animations.play('right');
+      this.player.animations.play('right')
 
     } else {
-      this.player.animations.stop();
-      this.player.frame = 4;
+      this.player.animations.stop()
+      this.player.frame = 4
       this.player.body.velocity.x = 0
     }
 
     //  Allow the player to jump if they are touching the ground.
-    if (this.cursor.up.isDown)
-    {
-      this.jumpPlayer();
+    if (this.cursor.up.isDown) {
+      this.jumpPlayer()
     }
   }
 
-  createPlayer() {
+  createPlayer () {
     //Create player
     this.player = this.game.add.sprite(35, 450, 'dude')
     this.game.physics.arcade.enable(this.player)
@@ -102,10 +105,27 @@ export default class extends Phaser.State {
     this.player.animations.add('right', [5, 6, 7, 8], 10, true)
   }
 
+  addStars () {
+    this.stars = this.game.add.group()
+
+    //  We will enable physics for any star that is created in this group
+    this.stars.enableBody = true
+
+    for (var i = 0; i < 20; i++) {
+      //  Create a star inside of the 'stars' group
+      this.star = this.stars.create(i * 140, 250, 'star')
+
+      //  Let gravity do its thing
+      this.star.body.gravity.y = 700
+
+      //  This just gives each star a slightly random bounce value
+      this.star.body.bounce.y = 0.7 + Math.random() * 0.2
+    }
+  }
+
   jumpPlayer () {
-    if (this.player.body.onFloor())
-    {
-      this.player.body.velocity.y = -350;
+    if (this.player.body.onFloor()) {
+      this.player.body.velocity.y = -350
     }
   }
 
