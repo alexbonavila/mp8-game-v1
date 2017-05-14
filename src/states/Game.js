@@ -31,8 +31,7 @@ export default class extends Phaser.State {
     this.game.physics.arcade.collide(this.player, this.groundLayer)
     this.game.physics.arcade.collide(this.stars, this.groundLayer);
 
-
-
+    this.game.physics.arcade.overlap(this.player, this.stars, this.takeStar, null, this);
 
     this.inputs()
   }
@@ -121,6 +120,14 @@ export default class extends Phaser.State {
       //  This just gives each star a slightly random bounce value
       this.star.body.bounce.y = 0.7 + Math.random() * 0.2
     }
+  }
+
+  takeStar (player, star) {
+    star.body.enable = false;
+    game.add.tween(star.scale).to({x:0}, 150).start();
+    game.add.tween(star).to({y:50}, 150).start();
+
+
   }
 
   jumpPlayer () {
