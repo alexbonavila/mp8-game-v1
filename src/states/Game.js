@@ -10,6 +10,8 @@ export default class extends Phaser.State {
   }
 
   create () {
+    this.level=false;
+
     this.firstBuildGame1()
 
     //Added physics
@@ -22,6 +24,8 @@ export default class extends Phaser.State {
 
     this.addStars()
 
+    this.addBlueStar()
+
     if (!this.game.device.desktop) {
       this.addMobileInputs()
     }
@@ -30,20 +34,19 @@ export default class extends Phaser.State {
   update () {
     this.game.physics.arcade.collide(this.player, this.groundLayer)
     this.game.physics.arcade.collide(this.stars, this.groundLayer);
+    this.game.physics.arcade.collide(this.blue_star, this.groundLayer);
+
 
     this.game.physics.arcade.overlap(this.player, this.stars, this.takeStar, null, this);
+    this.game.physics.arcade.overlap(this.player, this.blue_star, this.nextLevel, null, this);
 
     this.inputs()
   }
 
   render () {
-    // if (__DEV__) {
-    //   this.game.debug.spriteInfo(this.mushroom, 32, 32)
-    // }
-  }
-
-  nextLevel () {
-    console.log('next level')
+    if(this.level===true){
+      this.state.start('Game2')
+    }
   }
 
   firstBuildGame1 () {
@@ -88,7 +91,7 @@ export default class extends Phaser.State {
 
   createPlayer () {
     //Create player
-    this.player = this.game.add.sprite(35, 450, 'dude')
+    this.player = this.game.add.sprite(1, 450, 'dude')
     this.game.physics.arcade.enable(this.player)
 
     //The camera follows the player
@@ -110,30 +113,43 @@ export default class extends Phaser.State {
     //  We will enable physics for any star that is created in this group
     this.stars.enableBody = true
 
-    for (var i = 0; i < 20; i++) {
-      //  Create a star inside of the 'stars' group
-      this.star = this.stars.create(i * 140, 250, 'star')
+    var x_axis_star=50
 
-      //  Let gravity do its thing
+    for (var i=0;i<8;i++){
+      this.star = this.stars.create(x_axis_star, 250, 'star')
       this.star.body.gravity.y = 700
-
-      //  This just gives each star a slightly random bounce value
       this.star.body.bounce.y = 0.7 + Math.random() * 0.2
+
+      if(i===4){
+        x_axis_star=x_axis_star+250;
+      }else{
+        x_axis_star=x_axis_star+200;
+      }
+
     }
+  }
+
+  addBlueStar(){
+    this.blue_star = this.game.add.sprite(1975, 250, 'blue_star')
+    this.game.physics.arcade.enable(this.blue_star)
+
+    this.blue_star.body.gravity.y = 700
   }
 
   takeStar (player, star) {
     star.body.enable = false;
     game.add.tween(star.scale).to({x:0}, 150).start();
     game.add.tween(star).to({y:50}, 150).start();
-
-
   }
 
   jumpPlayer () {
     if (this.player.body.onFloor()) {
       this.player.body.velocity.y = -350
     }
+  }
+
+  nextLevel () {
+    this.level=true;
   }
 
   addMobileInputs () {
