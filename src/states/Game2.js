@@ -20,6 +20,10 @@ export default class extends Phaser.State {
     this.createPlayer()
 
 
+
+    this.levelText = this.game.add.text(15, 5, 'Level 2', {fontSize: '16px', fill: '#ffff'})
+    this.levelText.fixedToCamera = true
+
     if (!this.game.device.desktop) {
       this.addMobileInputs()
     }
