@@ -60,7 +60,7 @@ export default class extends Phaser.State {
 
   createPlayer() {
     //Create player
-    this.player = this.game.add.sprite(1, 1, 'dude')
+    this.player = this.game.add.sprite(35, 450, 'dude')
     this.game.physics.arcade.enable(this.player)
 
     //The camera follows the player
