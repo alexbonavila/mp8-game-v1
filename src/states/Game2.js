@@ -140,7 +140,7 @@ export default class extends Phaser.State {
   }
 
   winGame () {
-    console.log("win game");
+    globals.level="GameWin";
   }
 
   inputs () {
