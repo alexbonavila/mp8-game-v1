@@ -12,6 +12,7 @@ export default class extends Phaser.State {
 
   create () {
     globals.level=1;
+    globals.score = 0;
 
     this.firstBuildGame1()
 
@@ -32,7 +33,6 @@ export default class extends Phaser.State {
     this.levelText = this.game.add.text(15, 5, 'Level '+globals.level, {fontSize: '16px', fill: '#ffff'})
     this.levelText.fixedToCamera = true
 
-    globals.score = 0;
     this.scoreText = this.game.add.text(15, 20, 'Score: '+globals.score, { fontSize: '16px', fill: '#ffff' });
     this.scoreText.fixedToCamera = true;
 
