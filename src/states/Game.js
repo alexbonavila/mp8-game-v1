@@ -32,6 +32,10 @@ export default class extends Phaser.State {
     this.levelText = this.game.add.text(15, 5, 'Level '+globals.level, {fontSize: '16px', fill: '#ffff'})
     this.levelText.fixedToCamera = true
 
+    globals.score = 0;
+    this.scoreText = this.game.add.text(15, 20, 'Score: '+globals.score, { fontSize: '16px', fill: '#ffff' });
+    this.scoreText.fixedToCamera = true;
+
     if (!this.game.device.desktop) {
       this.addMobileInputs()
     }
@@ -140,6 +144,9 @@ export default class extends Phaser.State {
     star.body.enable = false
     game.add.tween(star.scale).to({x: 0}, 150).start()
     game.add.tween(star).to({y: 50}, 150).start()
+
+    globals.score += 10;
+    this.scoreText.text = 'Score: ' + globals.score;
   }
 
   jumpPlayer () {
