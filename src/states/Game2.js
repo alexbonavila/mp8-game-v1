@@ -52,6 +52,7 @@ export default class extends Phaser.State {
 
     this.backgroundlayer2 = this.map.createLayer('BackgroundLayer2')
     this.groundLayer2 = this.map.createLayer('GroundLayer2')
+    this.styleLayer2 = this.map.createLayer('StyleLayer2')
 
     this.map.setCollisionBetween(1, 100, true, 'GroundLayer2')
 
