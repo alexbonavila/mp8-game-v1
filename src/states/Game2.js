@@ -23,6 +23,7 @@ export default class extends Phaser.State {
 
     this.createPlayer()
     this.addStars()
+    this.addRedStar()
 
 
     this.levelText = this.game.add.text(15, 5, 'Level '+ globals.level, {fontSize: '16px', fill: '#ffff'})
@@ -39,8 +40,10 @@ export default class extends Phaser.State {
   update () {
     this.game.physics.arcade.collide(this.player, this.groundLayer2)
     this.game.physics.arcade.collide(this.stars, this.groundLayer2)
+    this.game.physics.arcade.collide(this.red_star, this.groundLayer2)
 
     this.game.physics.arcade.overlap(this.player, this.stars, this.takeStar, null, this)
+    this.game.physics.arcade.overlap(this.player, this.red_star, this.winGame, null, this)
 
     this.inputs()
   }
@@ -97,52 +100,35 @@ export default class extends Phaser.State {
     //  We will enable physics for any star that is created in this group
     this.stars.enableBody = true
 
-    this.star = this.stars.create(250, 250, 'star')
-    this.star.body.gravity.y = 700
-    this.star.body.bounce.y = 0.7 + Math.random() * 0.2
+    var stars_x_locations=[250, 425, 535, 620, 700, 860, 1005, 1135, 1160, 1185, 1210, 1535];
+    var stars_y_axis=250;
 
-    this.star = this.stars.create(425, 250, 'star')
-    this.star.body.gravity.y = 700
-    this.star.body.bounce.y = 0.7 + Math.random() * 0.2
+    for(var i=0;i<stars_x_locations.length;i++){
+      this.star = this.stars.create(stars_x_locations[i], stars_y_axis, 'star')
+      this.star.body.gravity.y = 700
+      this.star.body.bounce.y = 0.7 + Math.random() * 0.2
 
-    this.star = this.stars.create(535, 250, 'star')
-    this.star.body.gravity.y = 700
-    this.star.body.bounce.y = 0.7 + Math.random() * 0.2
+      if(i===6){
+        stars_y_axis+=400
+      }
 
-    this.star = this.stars.create(620, 250, 'star')
-    this.star.body.gravity.y = 700
-    this.star.body.bounce.y = 0.7 + Math.random() * 0.2
-
-    this.star = this.stars.create(700, 250, 'star')
-    this.star.body.gravity.y = 700
-    this.star.body.bounce.y = 0.7 + Math.random() * 0.2
-
-    this.star = this.stars.create(860, 250, 'star')
-    this.star.body.gravity.y = 700
-    this.star.body.bounce.y = 0.7 + Math.random() * 0.2
-
-    this.star = this.stars.create(1005, 250, 'star')
-    this.star.body.gravity.y = 700
-    this.star.body.bounce.y = 0.7 + Math.random() * 0.2
-
-    this.star = this.stars.create(1135, 650, 'star')
-    this.star.body.gravity.y = 700
-    this.star.body.bounce.y = 0.7 + Math.random() * 0.2
-
-    this.star = this.stars.create(1160, 650, 'star')
-    this.star.body.gravity.y = 700
-    this.star.body.bounce.y = 0.7 + Math.random() * 0.2
-
-    this.star = this.stars.create(1185, 650, 'star')
-    this.star.body.gravity.y = 700
-    this.star.body.bounce.y = 0.7 + Math.random() * 0.2
-
-    this.star = this.stars.create(1210, 650, 'star')
-    this.star.body.gravity.y = 700
-    this.star.body.bounce.y = 0.7 + Math.random() * 0.2
+    }
 
   }
 
+  addRedStar () {
+    this.red_star = this.game.add.sprite(1975, 250, 'red_star')
+    this.game.physics.arcade.enable(this.red_star)
+
+    this.red_star.body.gravity.y = 700
+  }
+
+  jumpPlayer () {
+    if (this.player.body.onFloor())
+    {
+      this.player.body.velocity.y = -350;
+    }
+  }
 
   takeStar (player, star) {
     star.body.enable = false
@@ -153,11 +139,8 @@ export default class extends Phaser.State {
     this.scoreText.text = 'Score: ' + globals.score;
   }
 
-  jumpPlayer () {
-    if (this.player.body.onFloor())
-    {
-      this.player.body.velocity.y = -350;
-    }
+  winGame () {
+    console.log("win game");
   }
 
   inputs () {

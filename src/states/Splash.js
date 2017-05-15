@@ -21,6 +21,7 @@ export default class extends Phaser.State {
     this.game.load.image('star', 'assets/star.png');
     this.game.load.image('blue_star', 'assets/blue_star.png');
     this.game.load.image('enemy', 'assets/enemy.png');
+    this.game.load.image('red_star', 'assets/red_star.png');
 
   }
 
