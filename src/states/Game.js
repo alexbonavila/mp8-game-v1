@@ -31,6 +31,8 @@ export default class extends Phaser.State {
 
     this.addBlueStar()
 
+    this.coinSound = this.add.audio('coin', 0.1)
+
     this.levelText = this.game.add.text(15, 5, globals.level, {fontSize: '16px', fill: '#ffff'})
     this.levelText.fixedToCamera = true
 
@@ -164,6 +166,7 @@ export default class extends Phaser.State {
 
     globals.score += 10
     this.scoreText.text = 'Score: ' + globals.score
+    this.coinSound.play()
   }
 
   jumpPlayer () {
