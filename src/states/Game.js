@@ -32,6 +32,7 @@ export default class extends Phaser.State {
     this.addBlueStar()
 
     this.coinSound = this.add.audio('coin', 0.1)
+    this.jumpSound = this.add.audio('jump', 0.1)
 
     this.levelText = this.game.add.text(15, 5, globals.level, {fontSize: '16px', fill: '#ffff'})
     this.levelText.fixedToCamera = true
@@ -172,6 +173,7 @@ export default class extends Phaser.State {
   jumpPlayer () {
     if (this.player.body.onFloor()) {
       this.player.body.velocity.y = -350
+      this.jumpSound.play()
     }
   }
 
