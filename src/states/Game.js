@@ -11,8 +11,9 @@ export default class extends Phaser.State {
   }
 
   create () {
-    globals.level="Level 1";
-    globals.score = 0;
+    globals.level = 'Level 1'
+    globals.score = 0
+    globals.lives = 3
 
     this.firstBuildGame1()
 
@@ -33,8 +34,10 @@ export default class extends Phaser.State {
     this.levelText = this.game.add.text(15, 5, globals.level, {fontSize: '16px', fill: '#ffff'})
     this.levelText.fixedToCamera = true
 
-    this.scoreText = this.game.add.text(15, 20, 'Score: '+globals.score, { fontSize: '16px', fill: '#ffff' });
-    this.scoreText.fixedToCamera = true;
+    this.scoreText = this.game.add.text(15, 20, 'Score: ' + globals.score, {fontSize: '16px', fill: '#ffff'})
+    this.scoreText.fixedToCamera = true
+
+    this.addLives()
 
     if (!this.game.device.desktop) {
       this.addMobileInputs()
@@ -55,7 +58,7 @@ export default class extends Phaser.State {
   }
 
   render () {
-    if (globals.level === "Level 2") {
+    if (globals.level === 'Level 2') {
       this.state.start('Game2')
     }
   }
@@ -140,13 +143,27 @@ export default class extends Phaser.State {
     this.blue_star.body.gravity.y = 700
   }
 
+  addLives () {
+    this.lives = game.add.group()
+    var x_axis=15;
+
+    for (var i = 0; i < globals.lives; i++) {
+      this.heart = this.game.add.sprite(x_axis, 40, 'heart')
+      this.heart.fixedToCamera = true
+      x_axis+=30
+    }
+
+    this.lives.fixedToCamera = true;
+
+  }
+
   takeStar (player, star) {
     star.body.enable = false
     game.add.tween(star.scale).to({x: 0}, 150).start()
     game.add.tween(star).to({y: 50}, 150).start()
 
-    globals.score += 10;
-    this.scoreText.text = 'Score: ' + globals.score;
+    globals.score += 10
+    this.scoreText.text = 'Score: ' + globals.score
   }
 
   jumpPlayer () {
@@ -156,7 +173,7 @@ export default class extends Phaser.State {
   }
 
   nextLevel () {
-    globals.level = "Level 2";
+    globals.level = 'Level 2'
   }
 
   enemyMovement () {
