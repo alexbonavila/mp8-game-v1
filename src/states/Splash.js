@@ -23,6 +23,11 @@ export default class extends Phaser.State {
     this.game.load.image('enemy', 'assets/enemy.png');
     this.game.load.image('red_star', 'assets/red_star.png');
     this.game.load.image('heart', 'assets/heart.png');
+    this.load.audio('dead', ['assets/sounds/dead.wav', 'assets/sounds/dead.mp3'])
+    this.load.audio('dust', ['assets/sounds/dust.wav', 'assets/sounds/dust.mp3'])
+    this.load.audio('jump', ['assets/sounds/jump.wav', 'assets/sounds/jump.mp3'])
+    this.load.audio('coin', ['assets/sounds/coin.wav', 'assets/sounds/coin.mp3'])
+    this.load.audio('back', ['assets/sounds/back.wav', 'assets/sounds/back.mp3'])
 
   }
 
