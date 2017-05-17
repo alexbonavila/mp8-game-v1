@@ -43,6 +43,7 @@ export default class extends Phaser.State {
     this.scoreText.fixedToCamera = true
 
     this.addLives()
+    this.setParticles()
 
     if (!this.game.device.desktop) {
       this.addMobileInputs()
@@ -162,6 +163,18 @@ export default class extends Phaser.State {
 
   }
 
+  setParticles () {
+    this.dust = this.add.emitter(0, 0, 20)
+    this.dust.makeParticles('dust')
+    this.dust.setYSpeed(-100, 100)
+    this.dust.setXSpeed(-100, 100)
+
+    this.exp = this.add.emitter(0, 0, 20)
+    this.exp.makeParticles('exp')
+    this.exp.setYSpeed(-150, 150)
+    this.exp.setXSpeed(-150, 150)
+  }
+
   takeStar (player, star) {
     star.body.enable = false
     game.add.tween(star.scale).to({x: 0}, 150).start()
@@ -212,8 +225,16 @@ export default class extends Phaser.State {
       this.player.body.velocity.x = 0
     }
 
+    if (this.player.body.onFloor() && this.has_player_jump){
+      this.dust.x = this.player.x +10
+      this.dust.y = this.player.y +40
+      this.dust.start(true, 300, null, 8)
+      this.has_player_jump=false
+    }
+
     //  Allow the player to jump if they are touching the ground.
     if (this.cursor.up.isDown) {
+      this.has_player_jump=true
       this.jumpPlayer()
     }
   }
