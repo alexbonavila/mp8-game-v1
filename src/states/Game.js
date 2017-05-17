@@ -31,8 +31,10 @@ export default class extends Phaser.State {
 
     this.addBlueStar()
 
-    this.coinSound = this.add.audio('coin', 0.1)
-    this.jumpSound = this.add.audio('jump', 0.1)
+    this.coinSound = this.game.add.audio('coin', 0.2)
+    this.jumpSound = this.game.add.audio('jump', 0.2)
+    this.backMusic = this.game.add.audio('back', 0.1, true);
+    //this.backMusic.play();
 
     this.levelText = this.game.add.text(15, 5, globals.level, {fontSize: '16px', fill: '#ffff'})
     this.levelText.fixedToCamera = true
