@@ -33,6 +33,8 @@ export default class extends Phaser.State {
 
     this.coinSound = this.game.add.audio('coin', 0.2)
     this.jumpSound = this.game.add.audio('jump', 0.2)
+    this.dustSound = this.game.add.audio('dust', 0.2)
+    this.deadSound = this.game.add.audio('dead', 0.2)
     this.backMusic = this.game.add.audio('back', 0.1, true);
     //this.backMusic.play();
 
@@ -202,11 +204,13 @@ export default class extends Phaser.State {
     switch (globals.lives){
       case 2:
         this.heart3.scale.setTo(0, 0)
+        this.deadSound.play()
         this.shakeEffect(this.enemy)
         setTimeout(function(out){out.createPlayer()},2000,this)
         break
       case 1:
         this.heart2.scale.setTo(0, 0)
+        this.deadSound.play()
         this.shakeEffect(this.enemy)
         setTimeout(function(out){out.createPlayer()},2000,this)
         break
@@ -268,6 +272,7 @@ export default class extends Phaser.State {
     }
 
     if (this.player.body.onFloor() && this.has_player_jump){
+      this.dustSound.play()
       this.dust.x = this.player.x +10
       this.dust.y = this.player.y +40
       this.dust.start(true, 300, null, 8)
