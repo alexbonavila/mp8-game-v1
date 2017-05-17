@@ -202,10 +202,12 @@ export default class extends Phaser.State {
     switch (globals.lives){
       case 2:
         this.heart3.scale.setTo(0, 0)
+        this.shakeEffect(this.enemy)
         setTimeout(function(out){out.createPlayer()},2000,this)
         break
       case 1:
         this.heart2.scale.setTo(0, 0)
+        this.shakeEffect(this.enemy)
         setTimeout(function(out){out.createPlayer()},2000,this)
         break
       case 0:
@@ -231,6 +233,23 @@ export default class extends Phaser.State {
     } else if (parseInt(this.enemy2.body.x) < 1290) {
       this.enemy2.body.velocity.x = 80
     }
+  }
+
+  shakeEffect (g) {
+    var move = 5
+    var time = 20
+
+    this.add.tween(g)
+      .to({y: '-' + move}, time).to({y: '+' + move * 2}, time * 2).to({y: '-' + move}, time)
+      .to({y: '-' + move}, time).to({y: '+' + move * 2}, time * 2).to({y: '-' + move}, time)
+      .to({y: '-' + move / 2}, time).to({y: '+' + move}, time * 2).to({y: '-' + move / 2}, time)
+      .start()
+
+    this.add.tween(g)
+      .to({x: '-' + move}, time).to({x: '+' + move * 2}, time * 2).to({x: '-' + move}, time)
+      .to({x: '-' + move}, time).to({x: '+' + move * 2}, time * 2).to({x: '-' + move}, time)
+      .to({x: '-' + move / 2}, time).to({x: '+' + move}, time * 2).to({x: '-' + move / 2}, time)
+      .start()
   }
 
   inputs () {
