@@ -58,6 +58,7 @@ export default class extends Phaser.State {
 
     this.game.physics.arcade.overlap(this.player, this.stars, this.takeStar, null, this)
     this.game.physics.arcade.overlap(this.player, this.blue_star, this.nextLevel, null, this)
+    this.game.physics.arcade.overlap(this.player, this.enemy, this.diePlayer, null, this)
 
     this.inputs()
     this.enemyMovement()
@@ -150,16 +151,14 @@ export default class extends Phaser.State {
   }
 
   addLives () {
-    this.lives = game.add.group()
-    var x_axis=15;
 
-    for (var i = 0; i < globals.lives; i++) {
-      this.heart = this.game.add.sprite(x_axis, 40, 'heart')
-      this.heart.fixedToCamera = true
-      x_axis+=30
-    }
+    this.heart1 = this.game.add.sprite(15, 40, 'heart')
+    this.heart2 = this.game.add.sprite(45, 40, 'heart')
+    this.heart3 = this.game.add.sprite(75, 40, 'heart')
 
-    this.lives.fixedToCamera = true;
+    this.heart1.fixedToCamera = true
+    this.heart2.fixedToCamera = true
+    this.heart3.fixedToCamera = true
 
   }
 
@@ -190,6 +189,30 @@ export default class extends Phaser.State {
       this.player.body.velocity.y = -350
       this.jumpSound.play()
     }
+  }
+
+  diePlayer (){
+    this.exp.x = this.player.x
+    this.exp.y = this.player.y + 10
+    this.exp.start(true, 300, null, 20)
+    this.player.scale.setTo(0, 0)
+
+    globals.lives-=1
+
+    switch (globals.lives){
+      case 2:
+        this.heart3.scale.setTo(0, 0)
+        setTimeout(function(out){out.createPlayer()},2000,this)
+        break
+      case 1:
+        this.heart2.scale.setTo(0, 0)
+        setTimeout(function(out){out.createPlayer()},2000,this)
+        break
+      case 0:
+        //TODO Game Over
+    }
+
+
   }
 
   nextLevel () {
