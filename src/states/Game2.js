@@ -241,6 +241,7 @@ export default class extends Phaser.State {
 
   winGame () {
     globals.level="GameWin";
+    this.state.start('GameWin')
   }
 
    enemyMovement () {

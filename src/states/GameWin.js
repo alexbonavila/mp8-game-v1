@@ -2,23 +2,29 @@ import Phaser from 'phaser'
 import globals from '../globals'
 
 export default class extends Phaser.State {
-  init () {}
+  init () {
+    this.stage.backgroundColor = '#000000'
+  }
 
   preload () {
 
   }
 
   create () {
-
+    this.createGameWinImage()
   }
 
-  update () {
+  createGameWinImage(){
+    this.img_game_win = game.add.sprite(375, 225, 'game_win');
 
+    this.img_game_win.anchor.set(0.5);
+
+    this.img_game_win.inputEnabled = true;
+
+    this.img_game_win.events.onInputDown.add(this.listener, this);
   }
 
-  render () {
-    // if (__DEV__) {
-    //   this.game.debug.spriteInfo(this.mushroom, 32, 32)
-    // }
+  listener(){
+    this.state.start('Game')
   }
 }
