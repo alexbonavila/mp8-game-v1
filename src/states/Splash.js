@@ -27,6 +27,9 @@ export default class extends Phaser.State {
     this.game.load.image('exp', 'assets/exp.png')
     this.game.load.image('game_over', 'assets/game_over.png')
     this.game.load.image('game_win', 'assets/game_win.png')
+    this.game.load.image('new_game', 'assets/new_game.png')
+    this.game.load.image('music_on', 'assets/music_on.png')
+    this.game.load.image('music_off', 'assets/music_off.png')
     this.game.load.audio('dead', ['assets/sounds/dead.wav', 'assets/sounds/dead.mp3'])
     this.game.load.audio('dust', ['assets/sounds/dust.wav', 'assets/sounds/dust.mp3'])
     this.game.load.audio('jump', ['assets/sounds/jump.wav', 'assets/sounds/jump.mp3'])
@@ -36,6 +39,6 @@ export default class extends Phaser.State {
   }
 
   create () {
-    this.state.start('Game')
+    this.state.start('Menu')
   }
 }

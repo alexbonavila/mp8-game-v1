@@ -32,7 +32,9 @@ export default class extends Phaser.State {
     this.addEnemy()
     this.addBlueStar()
 
-    this.backMusic.play()
+    if(globals.on_off_music==="ON"){
+      this.backMusic.play()
+    }
 
     this.levelText = this.game.add.text(15, 5, globals.level, {fontSize: '16px', fill: '#ffff'})
     this.levelText.fixedToCamera = true
