@@ -218,7 +218,7 @@ export default class extends Phaser.State {
           setTimeout(function (out) {out.createPlayer()}, 2000, this)
           break
         case 0:
-        //TODO Game Over
+          this.state.start('GameOver')
       }
     }
 
