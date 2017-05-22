@@ -7,7 +7,11 @@ export default class extends Phaser.State {
   init () {}
 
   preload () {
-
+    this.coinSound = this.game.add.audio('coin', 0.2)
+    this.jumpSound = this.game.add.audio('jump', 0.2)
+    this.dustSound = this.game.add.audio('dust', 0.2)
+    this.deadSound = this.game.add.audio('dead', 0.2)
+    this.backMusic = this.game.add.audio('back', 0.1, true)
   }
 
   create () {
@@ -24,19 +28,11 @@ export default class extends Phaser.State {
     this.input.keyboard.addKeyCapture([Phaser.Keyboard.UP, Phaser.Keyboard.DOWN, Phaser.Keyboard.RIGHT, Phaser.Keyboard.LEFT])
 
     this.createPlayer()
-
     this.addStars()
-
     this.addEnemy()
-
     this.addBlueStar()
 
-    this.coinSound = this.game.add.audio('coin', 0.2)
-    this.jumpSound = this.game.add.audio('jump', 0.2)
-    this.dustSound = this.game.add.audio('dust', 0.2)
-    this.deadSound = this.game.add.audio('dead', 0.2)
-    this.backMusic = this.game.add.audio('back', 0.1, true);
-    //this.backMusic.play();
+    this.backMusic.play()
 
     this.levelText = this.game.add.text(15, 5, globals.level, {fontSize: '16px', fill: '#ffff'})
     this.levelText.fixedToCamera = true
@@ -107,6 +103,8 @@ export default class extends Phaser.State {
     //adding anifations to walk left and right
     this.player.animations.add('left', [0, 1, 2, 3], 10, true)
     this.player.animations.add('right', [5, 6, 7, 8], 10, true)
+
+    this.player_can_die=true
   }
 
   addStars () {
@@ -193,31 +191,36 @@ export default class extends Phaser.State {
     }
   }
 
-  diePlayer (){
-    this.exp.x = this.player.x
-    this.exp.y = this.player.y + 10
-    this.exp.start(true, 300, null, 20)
-    this.player.scale.setTo(0, 0)
+  diePlayer () {
+    if (this.player_can_die) {
+      this.player_can_die=false
 
-    globals.lives-=1
+      this.exp.x = this.player.x
+      this.exp.y = this.player.y + 10
+      this.exp.start(true, 300, null, 20)
+      this.player.scale.setTo(0, 0)
 
-    switch (globals.lives){
-      case 2:
-        this.heart3.scale.setTo(0, 0)
-        this.deadSound.play()
-        this.shakeEffect(this.enemy)
-        setTimeout(function(out){out.createPlayer()},2000,this)
-        break
-      case 1:
-        this.heart2.scale.setTo(0, 0)
-        this.deadSound.play()
-        this.shakeEffect(this.enemy)
-        setTimeout(function(out){out.createPlayer()},2000,this)
-        break
-      case 0:
+      globals.lives -= 1
+
+      console.log(globals.lives)
+
+      switch (globals.lives) {
+        case 2:
+          this.heart3.scale.setTo(0, 0)
+          this.deadSound.play()
+          this.shakeEffect(this.enemy)
+          setTimeout(function (out) {out.createPlayer()}, 2000, this)
+          break
+        case 1:
+          this.heart2.scale.setTo(0, 0)
+          this.deadSound.play()
+          this.shakeEffect(this.enemy)
+          setTimeout(function (out) {out.createPlayer()}, 2000, this)
+          break
+        case 0:
         //TODO Game Over
+      }
     }
-
 
   }
 
@@ -271,17 +274,17 @@ export default class extends Phaser.State {
       this.player.body.velocity.x = 0
     }
 
-    if (this.player.body.onFloor() && this.has_player_jump){
+    if (this.player.body.onFloor() && this.has_player_jump) {
       this.dustSound.play()
-      this.dust.x = this.player.x +10
-      this.dust.y = this.player.y +40
+      this.dust.x = this.player.x + 10
+      this.dust.y = this.player.y + 40
       this.dust.start(true, 300, null, 8)
-      this.has_player_jump=false
+      this.has_player_jump = false
     }
 
     //  Allow the player to jump if they are touching the ground.
     if (this.cursor.up.isDown) {
-      this.has_player_jump=true
+      this.has_player_jump = true
       this.jumpPlayer()
     }
   }
