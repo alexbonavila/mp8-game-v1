@@ -35,6 +35,9 @@ export default class extends Phaser.State {
     this.game.load.audio('jump', ['assets/sounds/jump.wav', 'assets/sounds/jump.mp3'])
     this.game.load.audio('coin', ['assets/sounds/coin.wav', 'assets/sounds/coin.mp3'])
     this.game.load.audio('back', ['assets/sounds/back.wav', 'assets/sounds/back.mp3'])
+    this.game.load.image('right_butt', 'assets/right.png');
+    this.game.load.image('left_butt', 'assets/left.png');
+    this.game.load.image('jump_butt', 'assets/jump.png');
 
   }
 

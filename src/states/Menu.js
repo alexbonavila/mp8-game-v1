@@ -17,6 +17,9 @@ export default class extends Phaser.State {
     this.img_game_over.events.onInputDown.add(this.startGame, this);
 
     this.musicOnOff()
+
+    this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.game.scale.refresh();
   }
 
   startGame(){
