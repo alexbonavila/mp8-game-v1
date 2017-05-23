@@ -45,9 +45,9 @@ export default class extends Phaser.State {
     this.addLives()
     this.setParticles()
 
-    //if (!this.game.device.desktop) {
+    if (!this.game.device.desktop) {
       this.addMobileInputs()
-    //}
+    }
   }
 
   update () {
@@ -294,7 +294,7 @@ export default class extends Phaser.State {
   addMobileInputs () {
     console.log("Mobile imputs")
 
-    this.jumpButton = this.add.sprite(20, 340, 'jump_butt')
+    this.jumpButton = this.add.sprite(20, 300, 'jump_butt')
     this.jumpButton.inputEnabled = true
     this.jumpButton.events.onInputDown.add(this.jumpPlayer, this)
     this.jumpButton.alpha = 0.5
@@ -303,7 +303,7 @@ export default class extends Phaser.State {
     this.moveLeft = false
     this.moveRight = false
 
-    this.leftButton = this.add.sprite(600, 340, 'left_butt')
+    this.leftButton = this.add.sprite(500, 300, 'left_butt')
     this.leftButton.inputEnabled = true
     this.leftButton.events.onInputOver.add(function () {
       this.moveLeft = true
@@ -320,7 +320,7 @@ export default class extends Phaser.State {
     this.leftButton.alpha = 0.5
     this.leftButton.fixedToCamera = true
 
-    this.rightButton = this.add.sprite(700, 340, 'right_butt')
+    this.rightButton = this.add.sprite(600, 300, 'right_butt')
     this.rightButton.inputEnabled = true
     this.rightButton.events.onInputOver.add(function () {
       this.moveRight = true
