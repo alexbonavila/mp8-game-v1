@@ -224,13 +224,13 @@ export default class extends Phaser.State {
           this.heart3.scale.setTo(0, 0)
           this.deadSound.play()
           this.shakeEffect(this.enemy)
-          setTimeout(function (out) {out.createPlayer()}, 2000, this)
+          setTimeout(function (out) {out.createPlayer()}, 1000, this)
           break
         case 1:
           this.heart2.scale.setTo(0, 0)
           this.deadSound.play()
           this.shakeEffect(this.enemy)
-          setTimeout(function (out) {out.createPlayer()}, 2000, this)
+          setTimeout(function (out) {out.createPlayer()}, 1000, this)
           break
         case 0:
           this.state.start('GameOver')
