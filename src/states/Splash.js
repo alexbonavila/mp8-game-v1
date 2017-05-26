@@ -15,13 +15,11 @@ export default class extends Phaser.State {
     //
     //this.load.image('mushroom', 'assets/images/mushroom2.png')
     this.load.tilemap('tilemap', 'assets/tiled_map1.json', null, Phaser.Tilemap.TILED_JSON)
-    this.load.tilemap('tilemap2', 'assets/tiled_map2.json', null, Phaser.Tilemap.TILED_JSON)
     this.load.image('tiles', 'assets/P6yozhP.png')
     this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48)
     this.game.load.image('star', 'assets/star.png')
     this.game.load.image('blue_star', 'assets/blue_star.png')
     this.game.load.image('enemy', 'assets/enemy.png')
-    this.game.load.image('red_star', 'assets/red_star.png')
     this.game.load.image('heart', 'assets/heart.png')
     this.game.load.image('dust', 'assets/dust.png')
     this.game.load.image('exp', 'assets/exp.png')

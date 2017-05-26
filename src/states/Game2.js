@@ -5,6 +5,9 @@ export default class extends Phaser.State {
   init () {}
 
   preload () {
+    this.load.tilemap('tilemap2', 'assets/tiled_map2.json', null, Phaser.Tilemap.TILED_JSON)
+    this.game.load.image('red_star', 'assets/red_star.png')
+
     this.coinSound = this.game.add.audio('coin', 0.2)
     this.jumpSound = this.game.add.audio('jump', 0.2)
     this.dustSound = this.game.add.audio('dust', 0.2)
